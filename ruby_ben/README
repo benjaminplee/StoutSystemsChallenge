@@ -1,0 +1,9 @@
+Consolidated solution based on original winning Ruby script
+
+I like how each line performs one of the original requirements
+But I don't like how the file operations are on different lines
+and how I have to deal with the header line (range up front and adding it back onto the front)
+
+Also, the two layer sorting could be clearer w/ multi lines
+
+If anyone can improve and make more clear, please let me know

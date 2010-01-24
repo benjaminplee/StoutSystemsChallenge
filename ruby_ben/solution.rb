@@ -1,31 +1,13 @@
-output = ""
-output2 = []
+lines = []
 
-File.open("../input.txt") do |file|
-  header = file.gets
- 
-  output += header
-  
-  while(lines = file.gets)
-    fields = lines.split("\t")
-   
-    fields[1] = fields[1].gsub(/[^a-zA-Z]/, '').reverse
-   
-    output2 << fields if(!fields[1].empty?)
-  end
-end
+File.open('../input.txt').each { |line| lines << line }  
 
-output2 = output2.sort do |x, y| 
-  first = x[1] <=> y[1]
+lines = lines[1..lines.size].
+              map     { |line| line.split("\t") }.
+              each    { |line| line[1] = line[1].gsub(/[^a-zA-Z]/, '').reverse }.
+              reject  { |line| line[1].to_s.empty? }.
+              sort    { |x, y| (x[1] <=> y[1]) == 0 ? (x[5].to_f <=> y[5].to_f) : (x[1] <=> y[1]) }.
+              collect { |line| line.join("\t") }.
+              insert(0, lines[0])
 
-  if first == 0
-    first = x[5].to_f <=> y[5].to_f
-  end
-
-  first
-end
-
-
-output2.each { |line| output += line.join("\t") }
-
-File.open("output.txt", 'w') { |f| f.write(output) }
+File.open("output.txt", 'w') { |f| f.write(lines) }
